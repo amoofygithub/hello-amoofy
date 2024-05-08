@@ -18,16 +18,17 @@ import os
 import pandas as pd
 from datetime import datetime
 import numpy as np
+from dotenv import load_dotenv
 
-from streamlit.hello.utils import show_code
+load_dotenv()
 
 
 def amoofy_demo():
 
-    # Set OpenAI API Key
-    # client = OpenAI(
-    # api_key = st.secrets["api_key"]
-    # )
+    #Set OpenAI API Key
+    client = OpenAI(
+    api_key = os.getenv("API_KEY")
+    )
 
     # Upload and display logo
     logo_path = "./pages/files/amoofy.png"
@@ -68,35 +69,35 @@ def amoofy_demo():
         st.divider()
 
         # Generate follow-up questions
-        # system_prompt = """You are a nice expert interview assistant that helps people connect through the interview process. You learn from the example of top interviewers
-        #                 around the world that are able to draw out their guests in ways that surprise and delight them.
-        #                 You are STRICTLY FORBIDDEN from creating information about the Interviewer and Guest that is not given to you.
-        #                 You must suggest questions that are asked in the style of the greatest interviewers of our time, like Oprah, Vivek Murthy, Brené Brown, and Tim Ferriss.
-        #                 """
+        system_prompt = """You are a nice expert interview assistant that helps people connect through the interview process. You learn from the example of top interviewers
+                        around the world that are able to draw out their guests in ways that surprise and delight them.
+                        You are STRICTLY FORBIDDEN from creating information about the Interviewer and Guest that is not given to you.
+                        You must suggest questions that are asked in the style of the greatest interviewers of our time, like Oprah, Vivek Murthy, Brené Brown, and Tim Ferriss.
+                        """
 
-        # completion = client.chat.completions.create(
-        #     model="gpt-3.5-turbo",
-        #     messages=[{"role": "user",
-        #             "content": f"{prompt_text}",
-        #             }]
-        #         )	
+        completion = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[{"role": "user",
+                    "content": f"{prompt_text}",
+                    }]
+                )	
 
-        # st.write("Suggested Questions:")
-        # st.write(completion.choices[0].message.content)
+        st.write("Suggested Questions:")
+        st.write(completion.choices[0].message.content)
 
-        # new_row = {
-        #     "Interviewer": interviewer_name,
-        #     "Guest": guest_name,
-        #     "Relationship": relationship,
-        #     "Context": how_know_each_other,
-        #     "Current Happenings": current_happenings,
-        #     "Date": current_time,
-        #     "Suggested Questions": completion.choices[0].message.content
-        # }
-        # # Append data to the DataFrame
-        # log_df = pd.concat([log_df, pd.DataFrame([new_row])], ignore_index=True)
+        new_row = {
+            "Interviewer": interviewer_name,
+            "Guest": guest_name,
+            "Relationship": relationship,
+            "Context": how_know_each_other,
+            "Current Happenings": current_happenings,
+            "Date": current_time,
+            "Suggested Questions": completion.choices[0].message.content
+        }
+        # Append data to the DataFrame
+        log_df = pd.concat([log_df, pd.DataFrame([new_row])], ignore_index=True)
 
-        # log_df.to_csv("./pages/files/interview_log.csv", index=False,mode='a', header=False)
+        log_df.to_csv("./pages/files/interview_log.csv", index=False,mode='a', header=False)
 
 st.set_page_config(page_title="Amoofy Demo", page_icon="🎙️")
 st.markdown("# Amoofy Demo")
