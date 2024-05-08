@@ -18,15 +18,12 @@ import pandas as pd
 from datetime import datetime
 import numpy as np
 import os
-import toml
-
-config= toml.load("config.toml")
 
 def amoofy_demo():
 
     #Set OpenAI API Key
     client = OpenAI(
-    api_key = config["api"]["key"]
+    api_key = st.secrets.api.key
     )
 
     # Upload and display logo
