@@ -45,20 +45,24 @@ def amoofy_demo():
         st.caption("Feel free to elaborate! The more context, the better!")
         how_know_each_other = st.text_area("How do you know each other?")
         st.caption("Tell us a story of how you met, where you met, or who introduced you.")
-        current_happenings = st.text_area("What is currently happening in each of your lives right now?")
+        current_happenings = st.text_area("What is currently happening in your guest's life?")
+        current_happenings_you = st.text_area("What is currently happening in your life?")
         st.caption("Sharing about what is going on in either of your lives can make for richer conversation. Please provide detail.")
         submitted = st.form_submit_button("Get Questions!")
 
-    log_df = pd.DataFrame(columns=["Interviewer", "Guest", "Relationship", "Context", "Current Happenings","Date", "Suggested Questions"])
+    log_df = pd.DataFrame(columns=["Interviewer", "Guest", "Relationship", "Context", "Current Happenings", "Current Happenings Me", "Date", "Suggested Questions"])
 
     if submitted:
         current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")  # Get current date and time
-        combined_context = f"Interviewer is {interviewer_name}, Guest is {guest_name}, Relationship between them is {relationship}, Context on how they know each other is {how_know_each_other}, Current Happenings in their lives are {current_happenings}"
+        combined_context = f"Interviewer is {interviewer_name}, Guest is {guest_name}, Relationship between them is {relationship}, Context on how they know each other is {how_know_each_other}, Current Happenings in guest's life is {current_happenings}, \
+            Current Happenings in my life is {current_happenings_you}."
 
         # Append to the context text
-        prompt_text = f"My name is {interviewer_name} and my guest is {guest_name} and our relationship can be best described this way: {relationship}. We met in this context: {how_know_each_other},  and this is what is going on in our lives: {current_happenings}"
+        prompt_text = f"My name is {interviewer_name} and my guest is {guest_name} and our relationship can be best described this way: {relationship}. We met in this context: {how_know_each_other},  and this is what is going on in the guest's life: {current_happenings},\
+            and this is what is going on in my life {current_happenings_you}."
         prompt_text += f"I need help thinking of three meaningful and nuanced questions I can ask {guest_name} to get to know them better and draw out their stories. \
-                Use {guest_name}\'s name when putting together the questions.\
+                Use {guest_name}\'s name when putting together the questions that are about {guest_name} only.\
+                Use context from {current_happenings_you} to create connections between the guest and myself.\
                 Make sure to tell me why you're suggesting each question, and (parenthetically) how this question can help open up conversation between us."
 
         # Display the updated DataFrame and text
@@ -87,6 +91,7 @@ def amoofy_demo():
             "Relationship": relationship,
             "Context": how_know_each_other,
             "Current Happenings": current_happenings,
+            "Current Happenings Me": current_happenings_you
             "Date": current_time,
             "Suggested Questions": completion.choices[0].message.content
         }
