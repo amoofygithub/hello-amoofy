@@ -91,7 +91,7 @@ def amoofy_demo():
             "Relationship": relationship,
             "Context": how_know_each_other,
             "Current Happenings": current_happenings,
-            "Current Happenings Me": current_happenings_you
+            "Current Happenings Me": current_happenings_you,
             "Date": current_time,
             "Suggested Questions": completion.choices[0].message.content
         }
