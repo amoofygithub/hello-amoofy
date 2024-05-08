@@ -14,20 +14,19 @@
 
 import streamlit as st
 from openai import OpenAI
-import os
 import pandas as pd
 from datetime import datetime
 import numpy as np
-from dotenv import load_dotenv
+import os
+import toml
 
-load_dotenv()
-
+config= toml.load("config.toml")
 
 def amoofy_demo():
 
     #Set OpenAI API Key
     client = OpenAI(
-    api_key = os.getenv("API_KEY")
+    api_key = config["api"]["key"]
     )
 
     # Upload and display logo
