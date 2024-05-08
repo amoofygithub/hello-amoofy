@@ -47,7 +47,7 @@ def amoofy_demo():
         st.caption("Tell us a story of how you met, where you met, or who introduced you.")
         current_happenings = st.text_area("What is currently happening in each of your lives right now?")
         st.caption("Sharing about what is going on in either of your lives can make for richer conversation. Please provide detail.")
-        submitted = st.form_submit_button("Submit")
+        submitted = st.form_submit_button("Get Questions!")
 
     log_df = pd.DataFrame(columns=["Interviewer", "Guest", "Relationship", "Context", "Current Happenings","Date", "Suggested Questions"])
 
