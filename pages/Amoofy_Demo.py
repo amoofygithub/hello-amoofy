@@ -54,37 +54,31 @@ def amoofy_demo():
 
     if submitted:
         current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")  # Get current date and time
-        combined_context = f"Interviewer is {interviewer_name}, Guest is {guest_name}, Relationship between them is {relationship}, Context on how they know each other is {how_know_each_other}, Current Happenings in guest's life is {current_happenings}, \
-            Current Happenings in my life is {current_happenings_you}."
-
-        # Append to the context text
-        prompt_text = f"My name is {interviewer_name} and my guest is {guest_name} and our relationship can be best described this way: {relationship}. We met in this context: {how_know_each_other},  and this is what is going on in the guest's life: {current_happenings},\
-            and this is what is going on in my life {current_happenings_you}."
-        prompt_text += f"I need help thinking of three meaningful and nuanced questions I can ask {guest_name} to get to know them better and draw out their stories. \
-                Use {guest_name}\'s name when putting together the questions that are about {guest_name} only.\
-                You MUST use {current_happenings} when referring to what the guest is doing and you MUST use\
-                {current_happenings_you} when referring to what you are doing.\
-                Use context from {current_happenings_you} to create connections between the guest and myself.\
-                Make sure to tell me why you're suggesting each question, and (parenthetically) how this question can help open up conversation between us."
-
-        # Display the updated DataFrame and text
+        combined_context = f"You are a nice interview assistant trying to help {interviewer_name} and {guest_name} reconnect. \
+            Their relationship can be described this way: {relationship}.\
+            This is how they met: {how_know_each_other}.\
+            This is relevant information about what the guest is doing currently in their life: {current_happenings}.\
+            This is relevant information about what the interviewer is doing currently in their life: {current_happenings_you}.\
+            You MUST help {interviewer_name} create 3 questions that they can use to connect better with {guest_name}. \
+            You are STRICTLY FORBIDDEN from generating any questions that are offensive, provocative, or disrespectful.\
+            You must give {interviewer_name} 3 questions that use information about {guest_name} to start the conversation. \
+            If there is a connection between {current_happenings} and {current_happenings_you} you can refer to that in your question.\
+            You MUST think of how to make your questions interesting, in the style of someone that is an expert interviewer like Oprah."
+        
         st.divider()
 
         # Generate follow-up questions
-        system_prompt = """You are a nice expert interview assistant that helps people connect through the interview process. You learn from the example of top interviewers
-                        around the world that are able to draw out their guests in ways that surprise and delight them.
-                        You are STRICTLY FORBIDDEN from creating information about the Interviewer and Guest that is not given to you.
-                        You must suggest questions that are asked in the style of the greatest interviewers of our time, like Oprah, Vivek Murthy, Brené Brown, and Tim Ferriss.
+        system_prompt = """You are a nice interview assistant.
+            You are STRICTLY FORBIDDEN from generating any questions that are offensive, provocative, or disrespectful.
                         """
 
         completion = client.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[{"role": "user",
-                    "content": f"{prompt_text}",
-                    }]
+            model="gpt-4",
+            messages=[{"role":"system", "content": f"{system_prompt}"},
+                {"role": "user", "content": f"{combined_context}",}
+                ]
                 )	
-
-        st.write("Suggested Questions:")
+        st.write("Here you go:")
         st.write(completion.choices[0].message.content)
 
         new_row = {
