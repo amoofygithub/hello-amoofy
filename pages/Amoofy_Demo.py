@@ -62,6 +62,8 @@ def amoofy_demo():
             and this is what is going on in my life {current_happenings_you}."
         prompt_text += f"I need help thinking of three meaningful and nuanced questions I can ask {guest_name} to get to know them better and draw out their stories. \
                 Use {guest_name}\'s name when putting together the questions that are about {guest_name} only.\
+                You MUST use {current_happenings} when referring to what the guest is doing and you MUST use\
+                {current_happenings_you} when referring to what you are doing.\
                 Use context from {current_happenings_you} to create connections between the guest and myself.\
                 Make sure to tell me why you're suggesting each question, and (parenthetically) how this question can help open up conversation between us."
 
