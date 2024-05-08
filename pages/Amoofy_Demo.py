@@ -43,10 +43,10 @@ def amoofy_demo():
         guest_name = st.text_input("Guest First Name")
         relationship = st.text_input("What is your relationship to your guest?")
         st.caption("Feel free to elaborate! The more context, the better!")
-        how_know_each_other = st.text_input("How do you know each other?")
+        how_know_each_other = st.text_area("How do you know each other?")
         st.caption("Tell us a story of how you met, where you met, or who introduced you.")
-        current_happenings = st.text_area("What is currently happening in your lives right now?")
-        st.caption("Sharing about what is going on in either of your lives can make for richer conversation.")
+        current_happenings = st.text_area("What is currently happening in each of your lives right now?")
+        st.caption("Sharing about what is going on in either of your lives can make for richer conversation. Please provide detail.")
         submitted = st.form_submit_button("Submit")
 
     log_df = pd.DataFrame(columns=["Interviewer", "Guest", "Relationship", "Context", "Current Happenings","Date", "Suggested Questions"])
