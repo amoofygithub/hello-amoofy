@@ -17,8 +17,8 @@ from openai import OpenAI
 import os
 import pandas as pd
 from datetime import datetime
-from wordcloud import WordCloud
-import random
+#from wordcloud import WordCloud
+#import random
 import matplotlib.pyplot as plt
 
 def amoofy_demo():
@@ -149,14 +149,14 @@ def amoofy_demo():
 
         if submitted:
 
-            st.subheader(":cloud: Your Conversational Word Cloud :cloud:", divider= 'rainbow')
+            # st.subheader(":cloud: Your Conversational Word Cloud :cloud:", divider= 'rainbow')
             
         
-            wordcloud = WordCloud(stopwords={f"{guest_name}",f"{interviewer_name}"}, color_func=custom_color_func, width=800, background_color="white", height=400).generate(filter_short_words(q_and_a))
-            fig, ax = plt.subplots(figsize=(10, 5))
-            ax.imshow(wordcloud, interpolation="bilinear")
-            ax.axis("off")
-            st.pyplot(fig)
+            # wordcloud = WordCloud(stopwords={f"{guest_name}",f"{interviewer_name}"}, color_func=custom_color_func, width=800, background_color="white", height=400).generate(filter_short_words(q_and_a))
+            # fig, ax = plt.subplots(figsize=(10, 5))
+            # ax.imshow(wordcloud, interpolation="bilinear")
+            # ax.axis("off")
+            # st.pyplot(fig)
 
             st.subheader(":speaking_head_in_silhouette: Your Conversational Summary and Next Steps :speaking_head_in_silhouette:", divider= 'rainbow')
             
