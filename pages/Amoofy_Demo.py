@@ -172,7 +172,7 @@ def amoofy_demo():
             new_context = f"{interviewer_name} and {guest_name} have had their first conversation using the questions you suggested previously.\
                 You already know this about them:\
                 Their relationship can be described this way: {relationship}.\
-                This is why it is important for {interviewer_name} to connection with {guest_name}: {importance}.\
+                This is why it is important for {interviewer_name} to make a connection with {guest_name}: {importance}.\
                 This is how they met: {how_know_each_other}.\
                 This is relevant information about what the guest is doing currently in their life: {current_happenings}.\
                 This is relevant information about what the interviewer is doing currently in their life: {current_happenings_you}.\
