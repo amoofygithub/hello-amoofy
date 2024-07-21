@@ -17,9 +17,8 @@ from openai import OpenAI
 import os
 import pandas as pd
 from datetime import datetime
-#from wordcloud import WordCloud
-#import random
 import matplotlib.pyplot as plt
+import tiktoken
 
 def amoofy_demo():
 
@@ -42,6 +41,12 @@ def amoofy_demo():
     logo_path = "./pages/files/amoofy.png"
     if os.path.exists(logo_path):
         st.image(logo_path)
+
+     # Token count function
+    def count_tokens(text):
+        encoding = tiktoken.encoding_for_model("gpt-4")
+        tokens = encoding.encode(text)
+        return len(tokens)
 
 
     # Streamlit App
@@ -145,18 +150,21 @@ def amoofy_demo():
             q_and_a = st.text_area("Select whichever questions you wish from the choices provided. \
                                 Paste into the following window, and add your guest's answers.\
                                 Make sure to define who is speaking for each question or answer.")
+            uploaded_file = st.file_uploader("Or upload a text file with the Q&A (max 60KB)", type=["txt"])
             submitted = st.form_submit_button("Keep the Conversation Going")
 
-        if submitted:
-
-            # st.subheader(":cloud: Your Conversational Word Cloud :cloud:", divider= 'rainbow')
-            
+        if uploaded_file:
+            if uploaded_file.size > 60 * 1024:
+                st.error("The uploaded file exceeds the 60KB size limit. Please upload a smaller file.")
+            else:
+                tmp_q_and_a = uploaded_file.read().decode("utf-8")
+                if count_tokens(tmp_q_and_a) > 10000:
+                    st.error("The uploaded file exceeds the 10,000 token limit. Please upload a smaller file.")
+                else:
+                    st.success("File uploaded successfully.")
+                    q_and_a = tmp_q_and_a
         
-            # wordcloud = WordCloud(stopwords={f"{guest_name}",f"{interviewer_name}"}, color_func=custom_color_func, width=800, background_color="white", height=400).generate(filter_short_words(q_and_a))
-            # fig, ax = plt.subplots(figsize=(10, 5))
-            # ax.imshow(wordcloud, interpolation="bilinear")
-            # ax.axis("off")
-            # st.pyplot(fig)
+        if submitted and q_and_a:
 
             st.subheader(":speaking_head_in_silhouette: Your Conversational Summary and Next Steps :speaking_head_in_silhouette:", divider= 'rainbow')
             
